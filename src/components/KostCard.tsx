@@ -82,8 +82,8 @@ export default function KostCard({ kost, index }: Props) {
           <h3 className="text-[13px] font-bold text-gray-900 leading-tight line-clamp-1">{kost.name}</h3>
           <div className="flex items-center gap-1 shrink-0">
             <Star size={11} className="fill-amber-400 text-amber-400" />
-            <span className="text-[10px] font-bold text-amber-500">{kost.rating.toFixed(1)}</span>
-            <span className="text-[9px] text-gray-400">({kost.totalReviews})</span>
+            <span className="text-[10px] font-bold text-amber-500">{Number(kost.rating).toFixed(1)}</span>
+            <span className="text-[9px] text-gray-400">({ Number(kost.totalReviews)})</span>
           </div>
         </div>
 

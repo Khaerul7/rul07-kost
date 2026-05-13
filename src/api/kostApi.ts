@@ -1,19 +1,18 @@
 import type { Kost } from '../types/kost'
-import { mockKostData } from '../data/mockData'
 
-const MOCKAPI_URL = import.meta.env.VITE_MOCKAPI_URL as string | undefined
+const MOCKAPI_URL = import.meta.env.VITE_MOCKAPI_URL as string
 
 export async function fetchKosts(): Promise<Kost[]> {
-  if (MOCKAPI_URL) {
-    try {
-      const res = await fetch(`${MOCKAPI_URL}/kosts`)
-      if (!res.ok) throw new Error('API error')
-      return (await res.json()) as Kost[]
-    } catch {
-      console.warn('MockAPI gagal, pakai data lokal.')
-    }
-  }
-  // Simulasi network delay
-  await new Promise(r => setTimeout(r, 600))
-  return mockKostData
+  const res = await fetch(MOCKAPI_URL)
+  if (!res.ok) throw new Error('Gagal fetch dari MockAPI')
+  const data = await res.json()
+  
+  return data.map((k: Kost) => ({
+    ...k,
+    facilities: Array.isArray(k.facilities)
+      ? k.facilities
+      : typeof k.facilities === 'string'
+        ? (k.facilities as string).replace(/['\[\]]/g, '').split(',').map((f: string) => f.trim()).filter(Boolean)
+        : []
+  }))
 }

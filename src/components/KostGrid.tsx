@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Loader2, SearchX, ChevronDown } from 'lucide-react'
+import { SearchX, ChevronDown } from 'lucide-react'
 import KostCard from './KostCard'
 import { useFilterStore } from '../store/useFilterStore'
 import { useKosts } from '../hooks/useKosts'
@@ -72,7 +72,7 @@ export default function KostGrid() {
           <AnimatePresence>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {visible.map((kost, i) => (
-                <KostCard key={kost.id} kost={kost} index={i} />
+                <KostCard key={kost.id ?? i} kost={kost} index={i} />
               ))}
             </div>
           </AnimatePresence>
